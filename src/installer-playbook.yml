@@ -1,0 +1,10 @@
+---
+- name: This is the main installer
+  hosts: webserver
+  remote_user: tusher
+  become: yes
+  become_user: root
+  roles:
+    - tomcatrole # install tomcat
+
+
