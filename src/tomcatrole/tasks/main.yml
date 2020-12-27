@@ -24,6 +24,12 @@
     extra_opts: [--strip-components=1]
 
 
+- name: Copy setenv.sh to /opt/tomcat/conf
+  copy:
+    src: /home/tusher/Desktop/javaPro/anplay/src/tomcatrole/files/setenv.sh
+    dest: /opt/tomcat/conf
+    owner: tomcat
+    mode: '0777'
 
 # original commands
 #  Install tomcat
