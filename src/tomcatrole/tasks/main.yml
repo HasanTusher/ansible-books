@@ -26,7 +26,21 @@
 
 - name: Copy setenv.sh to /opt/tomcat/conf
   copy:
-    src: /home/tusher/Desktop/javaPro/anplay/src/tomcatrole/files/setenv.sh
+    src: setenv.sh
+    dest: /opt/tomcat/conf
+    owner: root
+    mode: '0777'
+
+- name: Copy start-w-vm.sh to /opt/tomcat/conf
+  copy:
+    src: start-w-vm.sh
+    dest: /opt/tomcat/conf
+    owner: root
+    mode: '0777'
+
+- name: Copy tomcat-users.xml to /opt/tomcat/conf
+  copy:
+    src: tomcat-users.xml
     dest: /opt/tomcat/conf
     owner: root
     mode: '0777'
