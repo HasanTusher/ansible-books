@@ -1,2 +1,25 @@
 ---
-# tasks file for jenkinsrole
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400 #One day
+# Create new directory, no need
+#- name: create new directory
+#  file:
+#    path: /tom
+#    state: directory
+
+- name: add repo
+  apt:
+    name: wget
+    state: present
+
+- name: add jenkins repo
+  shell:
+    cmd: wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+
+- name: Echo
+  shell:
+    cmd: sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+

@@ -5,6 +5,6 @@
   become: yes
   become_user: root
   roles:
-    - tomcatrole # install tomcat
-
+#    - tomcatrole # install tomcat
+     - jenkinsrole
 
