@@ -4,11 +4,11 @@
   apt:
     update_cache: yes
     cache_valid_time: 86400 #One day
-
-- name: create new directory
-  file:
-    path: /tom
-    state: directory
+# Create new directory, no need
+#- name: create new directory
+#  file:
+#    path: /tom
+#    state: directory
 
 - name: create new directory
   file:
