@@ -28,7 +28,7 @@
   copy:
     src: /home/tusher/Desktop/javaPro/anplay/src/tomcatrole/files/setenv.sh
     dest: /opt/tomcat/conf
-    owner: tomcat
+    owner: root
     mode: '0777'
 
 # original commands
