@@ -1,0 +1,84 @@
+---
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400 #One day
+# Create new directory, no need
+#- name: create new directory
+#  file:
+#    path: /tom
+#    state: directory
+
+- name: create new directory
+  file:
+    path: /opt/tomcat
+    state: directory
+
+#
+#- name: Download Tomcat
+#  unarchive:
+#    src: https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.39/bin/apache-tomcat-9.0.39.tar.gz
+#    dest: /opt/tomcat/
+#    remote_src: yes
+#    extra_opts: [--strip-components=1]
+
+
+- name: Copy setenv.sh to /opt/tomcat/conf
+  copy:
+    src: setenv.sh
+    dest: /opt/tomcat/bin
+    owner: root
+    mode: '0777'
+
+- name: Copy start-w-vm.sh to /opt/tomcat/conf
+  copy:
+    src: start-w-vm.sh
+    dest: /opt/tomcat/bin
+    owner: root
+    mode: '0777'
+    force: yes
+
+- name: Copy tomcat-users.xml to /opt/tomcat/conf
+  copy:
+    src: tomcat-users.xml
+    dest: /opt/tomcat/conf
+    owner: root
+    mode: '0777'
+    force: yes
+
+- name: Expose manager
+  copy:
+    src: context.xml
+    dest: /opt/tomcat/webapps/manager/META-INF
+    owner: root
+    mode: '0777'
+    force: yes
+
+- name: Copy tomcat.service to /etc/systemd/system
+  copy:
+    src: tomcat.service
+    dest: /etc/systemd/system
+    owner: root
+    mode: '0777'
+    force: yes
+
+- name: Stop tomcat.service
+  systemd:
+    name: tomcat.service
+    state: stopped
+
+- name: Daemon reload
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: tomcat.service
+    enabled: yes
+# original commands
+#  Install tomcat
+#  sudo apt update
+#  cd /
+#  mkdir tom
+#  cd tom/
+#  curl -O https://downloads.apache.org/tomcat/tomcat-9/v9.0.39/bin/apache-tomcat-9.0.39.tar.gz
+#  sudo tar xzvf apache-tomcat-*tar.gz -C /opt/tomcat --strip-components=1
