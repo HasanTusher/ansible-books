@@ -19,7 +19,37 @@
   shell:
     cmd: wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
 
-- name: Echo
-  shell:
-    cmd: sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+- name: copy jenkins source list
+  shell: sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
 
+- name: install jenkins
+  apt:
+    name: jenkins
+    state: present
+    update_cache: yes
+
+- name: change jenkins port
+  lineinfile:
+    path: /etc/default/jenkins
+    regexp: 'HTTP_PORT=8080'
+    line: 'HTTP_PORT=9400'
+    state: present
+
+
+- name: start jenkins
+  systemd:
+    name: jenkins
+    state: restarted
+
+- name: sleep for 2 seconds and continue with play
+  wait_for: timeout=2
+  delegate_to: localhost
+
+- name: init password jenkin
+  shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+  changed_when: false
+  register: result
+
+- name: print init password jenkins
+  debug:
+    var: result.stdout
