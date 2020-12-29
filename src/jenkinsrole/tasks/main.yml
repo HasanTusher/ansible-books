@@ -4,11 +4,6 @@
   apt:
     update_cache: yes
     cache_valid_time: 86400 #One day
-# Create new directory, no need
-#- name: create new directory
-#  file:
-#    path: /tom
-#    state: directory
 
 - name: add repo
   apt:
@@ -40,6 +35,13 @@
   systemd:
     name: jenkins
     state: restarted
+
+# disabling auto start cause of limited resource
+#- name: enable jenkins
+#  systemd:
+#    name: jenkins
+#    enabled: true
+#
 
 - name: sleep for 2 seconds and continue with play
   wait_for: timeout=2
