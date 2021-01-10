@@ -1,2 +1,13 @@
----
-# tasks file for gitrole
+
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    update_cache: yes
+
+
+- name: install git
+  apt:
+    update_cache: yes
+    name: git
+    state: present
+

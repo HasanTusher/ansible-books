@@ -5,7 +5,10 @@
   become: yes
   become_user: root
   roles:
-    - mysqlrole
+    - mavenrole
+#    - openjdkrole
+#    - gitrole
+#    - mysqlrole
 #    - apacherole
 #    - tomcatrole # install tomcat
 #    - jenkinsrole
